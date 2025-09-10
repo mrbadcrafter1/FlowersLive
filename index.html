@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowersLive</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">FlowersLive</div>
+        <button class="settings-btn" id="settingsBtn">⚙️</button>
+    </header>
+    <main> 
+        <div class="plants-grid" id="plantsGrid">
+        </div>
+        <div class="add-plant-btn" id="addPlantBtn">
+            <div class="add-icon">+</div>
+            <div>Добавить растение</div>
+        </div>
+    </main>
+    <div class="modal" id="addPlantModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Добавить растение</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="addPlantForm">
+                <div class="form-group">
+                    <label for="plantName">Название растения</label>
+                    <input type="text" id="plantName" required>
+                </div>
+                <div class="form-group">
+                    <label for="wateringInterval">Интервал полива (дни)</label>
+                    <input type="number" id="wateringInterval" min="1" value="7" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </form>
+        </div>
+    </div>
+    <div class="modal" id="plantHistoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="historyPlantName">История поливов</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div id="wateringHistory">
+            </div>
+            <button class="watered-btn" id="markWateredBtn">Полито</button>
+        </div>
+    </div>
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Настройки</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>Выберите аватар:</label>
+                <div class="profile-pictures">
+                    <img src="images/avatar1.png" class="profile-pic" data-id="1">
+                    <img src="images/avatar2.png" class="profile-pic" data-id="2">
+                    <img src="images/avatar3.png" class="profile-pic" data-id="3">
+                    <img src="images/avatar4.png" class="profile-pic" data-id="4">
+                </div>
+            </div>
+            <button class="btn btn-primary" id="saveSettingsBtn">Сохранить</button>
+        </div>
+    </div>
+    <div class="notification" id="notification">
+        Растение нуждается в поливе!
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
