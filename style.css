@@ -30,14 +30,24 @@ header {
 .settings-btn {
     background: none;
     border: none;
-    color: white;
-    font-size: 24px;
     cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.settings-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .plants-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 15px;
     margin-bottom: 30px;
 }
@@ -50,6 +60,10 @@ header {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     cursor: pointer;
     transition: transform 0.2s;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .plant-card:hover {
@@ -81,8 +95,13 @@ header {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    height: 100%;
     min-height: 150px;
+    transition: all 0.3s ease;
+}
+
+.add-plant-btn:hover {
+    background-color: #d4edda;
+    transform: translateY(-5px);
 }
 
 .add-icon {
@@ -151,11 +170,16 @@ input, select {
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
+    transition: background-color 0.3s;
 }
 
 .btn-primary {
     background-color: #4CAF50;
     color: white;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
 }
 
 .btn-secondary {
@@ -178,6 +202,11 @@ input, select {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 15px;
+    width: 100%;
+}
+
+.watered-btn:hover {
+    background-color: #45a049;
 }
 
 .profile-pictures {
@@ -188,29 +217,49 @@ input, select {
 }
 
 .profile-pic {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
     border: 2px solid transparent;
+    transition: transform 0.3s;
+}
+
+.profile-pic:hover {
+    transform: scale(1.1);
 }
 
 .profile-pic.selected {
     border-color: #4CAF50;
+    transform: scale(1.1);
 }
 
 .notification {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    padding: 15px;
-    background-color: #ff3f05;
+    padding: 20px 25px;
+    background: linear-gradient(135deg, #ff6b6b, #ff3f05);
     color: white;
-    border-radius: 5px;
+    border-radius: 10px;
     display: none;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 20px rgba(255, 63, 5, 0.4);
+    z-index: 1000;
+    font-weight: bold;
+    font-size: 16px;
+    border-left: 5px solid #ffeb3b;
+    animation: pulse 2s infinite;
+    max-width: 300px;
 }
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+
 .btn-danger {
     background-color: #e74c3c;
     color: white;
@@ -219,12 +268,48 @@ input, select {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 15px;
+    width: 100%;
 }
 
 .btn-danger:hover {
     background-color: #c0392b;
 }
 
+.plant-status {
+    font-size: 11px;
+    color: #2196F3;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.plant-card[style*="background: rgb(255, 243, 224)"],
+.plant-card[style*="background: #fff3e0"] {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb) !important;
+    border: 2px solid #2196F3 !important;
+}
+
+.plant-card[style*="background: rgb(255, 235, 238)"],
+.plant-card[style*="background: #ffebee"] {
+    background: linear-gradient(135deg, #ffebee, #ffcdd2) !important;
+    border: 2px solid #f44336 !important;
+}
+.notification[style*="background: linear-gradient(135deg, #ff9800, #f57c00)"],
+.notification.warning {
+    background: linear-gradient(135deg, #ff9800, #f57c00) !important;
+    border-left: 5px solid #ffeb3b !important;
+}
+
+.notification[style*="background: linear-gradient(135deg, #f44336, #d32f2f)"],
+.notification.error {
+    background: linear-gradient(135deg, #f44336, #d32f2f) !important;
+    border-left: 5px solid #ffcdd2 !important;
+}
+
+.notification[style*="background: linear-gradient(135deg, #4CAF50, #45a049)"],
+.notification.info {
+    background: linear-gradient(135deg, #4CAF50, #45a049) !important;
+    border-left: 5px solid #c8e6c9 !important;
+}
 @media (max-width: 768px) {
     .plants-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -238,5 +323,10 @@ input, select {
     
     .profile-pictures {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .profile-pic {
+        width: 60px;
+        height: 60px;
     }
 }
