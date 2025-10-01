@@ -9,14 +9,16 @@
 <body>
     <header>
         <div class="logo">FlowersLive</div>
-        <button class="settings-btn" id="settingsBtn">⚙️</button>
+        <button class="settings-btn" id="settingsBtn">
+            <img src="images/avatar1.png" class="settings-avatar" id="settingsAvatar">
+        </button>
     </header>
     <main> 
         <div class="plants-grid" id="plantsGrid">
-        </div>
-        <div class="add-plant-btn" id="addPlantBtn">
-            <div class="add-icon">+</div>
-            <div>Добавить растение</div>
+            <div class="add-plant-btn" id="addPlantBtn">
+                <div class="add-icon">+</div>
+                <div>Добавить растение</div>
+            </div>
         </div>
     </main>
     <div class="modal" id="addPlantModal">
@@ -47,6 +49,7 @@
             <div id="wateringHistory">
             </div>
             <button class="watered-btn" id="markWateredBtn">Полито</button>
+            <button class="btn btn-danger" id="deletePlantBtn">Удалить растение</button>
         </div>
     </div>
     <div class="modal" id="settingsModal">
@@ -67,9 +70,7 @@
             <button class="btn btn-primary" id="saveSettingsBtn">Сохранить</button>
         </div>
     </div>
-    <div class="notification" id="notification">
-        Растение нуждается в поливе!
-    </div>
+    <div class="notification" id="notification"></div>
     <script src="script.js"></script>
 </body>
 </html>
