@@ -7,18 +7,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const addPlantForm = document.getElementById('addPlantForm');
     const closeButtons = document.querySelectorAll('.close-btn');
     const settingsBtn = document.getElementById('settingsBtn');
+    const settingsAvatar = document.getElementById('settingsAvatar');
     const wateringHistory = document.getElementById('wateringHistory');
     const historyPlantName = document.getElementById('historyPlantName');
     const markWateredBtn = document.getElementById('markWateredBtn');
+    const deletePlantBtn = document.getElementById('deletePlantBtn');
     const saveSettingsBtn = document.getElementById('saveSettingsBtn');
     const profilePics = document.querySelectorAll('.profile-pic');
     const notification = document.getElementById('notification');
-    
-    const deletePlantBtn = document.createElement('button');
-    deletePlantBtn.textContent = 'Удалить растение';
-    deletePlantBtn.className = 'btn btn-danger';
-    deletePlantBtn.style.marginTop = '15px';
-    markWateredBtn.parentNode.insertBefore(deletePlantBtn, markWateredBtn.nextSibling);
 
     let currentPlantId = null;
     let plants = JSON.parse(localStorage.getItem('plants')) || [];
@@ -26,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastWateringDates = JSON.parse(localStorage.getItem('lastWateringDates')) || {};
     
     function init() {
-        // Очищаем данные о несуществующих растениях
         cleanupWateringDates();
         renderPlants();
         checkWateringTime();
@@ -34,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(checkWateringTime, 6 * 60 * 60 * 1000);
     }
     
-    // Функция для очистки данных о удаленных растениях
     function cleanupWateringDates() {
         const plantNames = plants.map(plant => plant.name);
         const cleanedDates = {};
@@ -51,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function renderPlants() {
         plantsGrid.innerHTML = '';
+        
         plants.forEach((plant, index) => {
             const plantCard = document.createElement('div');
             plantCard.className = 'plant-card';
@@ -85,13 +80,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 plantCard.style.border = '2px solid #e74c3c';
                 plantCard.style.background = '#ffebee';
             } else if (!wateringCheck.canWater) {
-                plantCard.style.border = '2px solid #ff9800';
-                plantCard.style.background = '#fff3e0';
+                plantCard.style.border = '2px solid #2196F3';
+                plantCard.style.background = '#e3f2fd';
             }
             
             plantCard.addEventListener('click', () => openPlantHistory(index));
             plantsGrid.appendChild(plantCard);
         });
+        
+        plantsGrid.appendChild(addPlantBtn);
     }
     
     function formatDate(date) {
@@ -122,7 +119,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentPlantId !== null) {
             const plantName = plants[currentPlantId].name;
             if (confirm(`Вы уверены, что хотите удалить растение "${plantName}"?`)) {
-                // Удаляем данные о поливе этого растения
                 delete lastWateringDates[plantName];
                 saveWateringDates();
                 
@@ -139,7 +135,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const now = new Date();
         const today = now.toDateString();
         
-        // Проверяем, есть ли запись о поливе для этого конкретного растения
         if (lastWateringDates[plant.name] === today) {
             return { canWater: false, reason: 'already_watered_today' };
         }
@@ -177,7 +172,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const now = new Date();
             plant.lastWatered = now.toISOString();
             
-            // Сохраняем дату полива для этого конкретного растения
             lastWateringDates[plant.name] = now.toDateString();
             saveWateringDates();
             
@@ -208,19 +202,20 @@ document.addEventListener('DOMContentLoaded', function() {
     function showNotification(message, type = 'info') {
         notification.textContent = message;
         notification.style.display = 'block';
-        
+        notification.className = 'notification';
         if (type === 'warning') {
-            notification.style.backgroundColor = '#ff9800';
-        } else if (type === 'error') {
-            notification.style.backgroundColor = '#f44336';
-        } else {
-            notification.style.backgroundColor = '#4CAF50';
+            notification.classList.add('warning');
+        } 
+        else if (type === 'error') {
+            notification.classList.add('error');
         }
-        
+        else {
+        notification.classList.add('info');
+        }
         setTimeout(() => {
-            notification.style.display = 'none';
-        }, 5000);
-    }
+        notification.style.display = 'none';
+    }, 5000);
+}
     
     addPlantBtn.addEventListener('click', function() {
         addPlantModal.style.display = 'flex';
@@ -243,7 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const plantName = document.getElementById('plantName').value;
         const wateringInterval = parseInt(document.getElementById('wateringInterval').value);
         if (plantName && wateringInterval) {
-            // Проверяем, нет ли уже растения с таким именем
             const existingPlantIndex = plants.findIndex(p => p.name === plantName);
             
             if (existingPlantIndex !== -1) {
@@ -286,6 +280,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (selectedPic) {
             profilePics.forEach(p => p.classList.remove('selected'));
             selectedPic.classList.add('selected');
+            
+            settingsAvatar.src = selectedPic.src;
         }
     }
     
@@ -300,6 +296,11 @@ document.addEventListener('DOMContentLoaded', function() {
             settingsModal.style.display = 'none';
         }
     });
+
+    const initialAvatar = document.querySelector(`.profile-pic[data-id="${profilePictureId}"]`);
+    if (initialAvatar) {
+        settingsAvatar.src = initialAvatar.src;
+    }
     
     init();
     
