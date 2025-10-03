@@ -7,20 +7,36 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <div class="logo">FlowersLive</div>
-        <button class="settings-btn" id="settingsBtn">
-            <img src="images/avatar1.png" class="settings-avatar" id="settingsAvatar">
-        </button>
-    </header>
-    <main> 
-        <div class="plants-grid" id="plantsGrid">
-            <div class="add-plant-btn" id="addPlantBtn">
-                <div class="add-icon">+</div>
-                <div>Добавить растение</div>
-            </div>
+    <div class="ad-banner ad-left" id="adLeft">
+        <div class="ad-content">
+            <div class="ad-text">Здесь могла бы быть ваша реклама</div>
         </div>
-    </main>
+    </div>
+    
+    <div class="ad-banner ad-right" id="adRight">
+        <div class="ad-content">
+            <div class="ad-text">Здесь могла бы быть ваша реклама</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo">FlowersLive</div>
+            <button class="settings-btn" id="settingsBtn">
+                <img src="images/avatar1.png" class="settings-avatar" id="settingsAvatar">
+            </button>
+        </header>
+        
+        <main> 
+            <div class="plants-grid" id="plantsGrid">
+                <div class="add-plant-btn" id="addPlantBtn">
+                    <div class="add-icon">+</div>
+                    <div>Добавить растение</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
     <div class="modal" id="addPlantModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -36,22 +52,35 @@
                     <label for="wateringInterval">Интервал полива (дни)</label>
                     <input type="number" id="wateringInterval" min="1" value="7" required>
                 </div>
+                <div class="form-group">
+                    <label for="fertilizingInterval">Интервал удобрения (дни)</label>
+                    <input type="number" id="fertilizingInterval" min="1" value="30" required>
+                </div>
                 <button type="submit" class="btn btn-primary">Добавить</button>
             </form>
         </div>
     </div>
+
     <div class="modal" id="plantHistoryModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="historyPlantName">История поливов</h2>
+                <h2 id="historyPlantName">Уход за растением</h2>
                 <button class="close-btn">&times;</button>
             </div>
-            <div id="wateringHistory">
+            <div class="care-tabs">
+                <button class="tab-btn active" data-tab="watering">Полив</button>
+                <button class="tab-btn" data-tab="fertilizing">Удобрение</button>
             </div>
-            <button class="watered-btn" id="markWateredBtn">Полито</button>
+            <div id="wateringHistory" class="tab-content active"></div>
+            <div id="fertilizingHistory" class="tab-content"></div>
+            <div class="care-buttons">
+                <button class="watered-btn" id="markWateredBtn">Полито</button>
+                <button class="fertilized-btn" id="markFertilizedBtn">Удобрено</button>
+            </div>
             <button class="btn btn-danger" id="deletePlantBtn">Удалить растение</button>
         </div>
     </div>
+
     <div class="modal" id="settingsModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -62,14 +91,40 @@
                 <label>Выберите аватар:</label>
                 <div class="profile-pictures">
                     <img src="images/avatar1.png" class="profile-pic" data-id="1">
-                    <img src="images/avatar2.png" class="profile-pic" data-id="2">
+                    <img src="images/avatar2.png" class="profile-pic premium-avatar" data-id="2">
                     <img src="images/avatar3.png" class="profile-pic" data-id="3">
                     <img src="images/avatar4.png" class="profile-pic" data-id="4">
                 </div>
+                <div class="premium-info">
+                    <div class="premium-badge" id="premiumBadge">🔒 Премиум</div>
+                </div>
             </div>
+            <button class="btn btn-premium" id="buyPremiumBtn">🎁 Купить премиум</button>
             <button class="btn btn-primary" id="saveSettingsBtn">Сохранить</button>
         </div>
     </div>
+
+    <div class="modal" id="premiumModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Премиум подписка</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="premium-features">
+                <div class="feature">✅ Убрать всю рекламу</div>
+                <div class="feature">✅ Открыть эксклюзивные аватары</div>
+                <div class="feature">✅ Приоритетная поддержка</div>
+                <div class="feature">✅ Дополнительные функции</div>
+            </div>
+            <div class="premium-price">
+                <div class="price">$4.99/месяц</div>
+                <div class="trial">7 дней бесплатно</div>
+            </div>
+            <button class="btn btn-premium-large" id="confirmPremiumBtn">Активировать премиум</button>
+            <div class="premium-note">*Подписка автоматически продлевается</div>
+        </div>
+    </div>
+
     <div class="notification" id="notification"></div>
     <script src="script.js"></script>
 </body>
